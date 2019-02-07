@@ -8,3 +8,19 @@ An ongoing style guide for akin.
 5. Opt for protocols instead of superclasses when possible. 
 6. If a protocol isn't being used for callbacks, use functional programming with extensions instead.  
   ie: instead of `class ArrowButton: UIButton, Arrowable` or `extension UIButton { func arrowMethod() {}}`
+
+
+7. If method B is called by method A, place method B directly underneath method A if possible: 
+
+```
+    func updateContainer() {
+        let rectOfCell = responseTV.rectForRow(at: IndexPath(row: 0, section: 0)),
+        rectInView = responseTV.convert(rectOfCell, to: responseTV.superview)
+        if rectInView.minY >= 0 {return}
+        var alpha = abs(rectInView.minY) / rectInView.height
+        if alpha > 1 { alpha = 1 }
+        setTopContainerAlpha(alpha)
+    }
+    
+    fileprivate func setTopContainerAlpha(_ alpha: CGFloat) {
+```
